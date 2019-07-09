@@ -50,7 +50,7 @@ myhandler globalST = do
 
 perfHandler :: Ref GlobalState -> Handler
 perfHandler globalST = do
-    arr <- pur sreplicate 1000000 "Hi")
+    arr <- pure $ replicate 1000000 "Hi"
     a <- liftEffect $ getTime unit
     _ <- for arr \n -> do
         pure $ (genericEncodeJSON opts (MyRecord { a: "Hello World" }))
