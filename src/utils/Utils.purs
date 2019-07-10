@@ -1,6 +1,5 @@
 module Utils where
 
-import Prelude
 import Data.ByteString (ByteString)
 import Data.ByteString as ByteString
 

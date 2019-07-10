@@ -1,8 +1,0 @@
-var some = function(){
-	var i=1;
-	var tick = new Date().getTime();
-	while(i<1000000){ JSON.parse("{\"name\":\"hello\"}"); i++};
-	var tock = new Date().getTime();
-	console.log("Time taken: ",tock-tick);	
-}
-
