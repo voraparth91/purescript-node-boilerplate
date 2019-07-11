@@ -2,11 +2,12 @@ module Main where
 
 import BackendApp.Routes (helloWorldHandler)
 import BackendApp.Types (GlobalState, BackendMonad)
+import BackendApp.WebSockets (startServerWS)
 import Control.Monad.Except (runExceptT)
 import Control.Monad.Reader (runReaderT)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe)
-import Database.Redis (Connection, connect, defaultConfig)
+import Database.Redis (connect, defaultConfig)
 import Database.Redis as Redis
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
@@ -46,10 +47,12 @@ app globalST = do
 -------------------------------------------------------------------------------
 main :: Effect Unit
 main = do
+    -- _ <- startWS
     launchAff_ initApp
 
 initApp :: Aff Server
 initApp = do
+    _ <- startServerWS
     conn        <- connect defaultConfig
     globalST    <- pure $ { redisConn : conn}
     liftEffect $ listenHttp (app globalST) 8080 \_ ->
